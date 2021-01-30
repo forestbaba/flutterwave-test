@@ -64,14 +64,14 @@ app.post('/validate-rule', (req, res) =>{
             
             if(dataArray.includes(""+subKey)){
 
-
-
                 if(JSON.stringify(Object.keys(fieldValue)) !== JSON.stringify(subKey)){
                     return res.status(400).json(responseMsg(`field [${subKey}}] is missing from field value.`, "error", null))
                 }
                 if(fieldValue.missions.count){
+
     
                     if(condition === condition1){
+
                         if(conditionValue === fieldValue.missions.count){
                             return res.status(200).json(responseMsg({ message:`field ${Object.getOwnPropertyNames(fieldValue)[0] + "." +Object.getOwnPropertyNames(fieldValue.missions)[0]} successfully validated.`, 
                             status:"success",
@@ -98,6 +98,7 @@ app.post('/validate-rule', (req, res) =>{
                               }))
                         }
                     }else if(condition === condition2){
+
                         if(conditionValue < fieldValue.missions.count || conditionValue > fieldValue.missions.count){
     
                             return res.status(200).json(responseMsg({ message:`field ${Object.getOwnPropertyNames(fieldValue)[0] + "." +Object.getOwnPropertyNames(fieldValue.missions)[0]} successfully validated.`, 
@@ -177,6 +178,7 @@ app.post('/validate-rule', (req, res) =>{
                               }))
                         }
                     }else if(condition === condition5){
+
                         if(conditionValue === fieldValue.missions.count){
                             return res.status(200).json(responseMsg({ message:`field ${Object.getOwnPropertyNames(fieldValue)[0] + "." +Object.getOwnPropertyNames(fieldValue.missions)[0]} successfully validated.`, 
                             status:"success",
@@ -202,6 +204,9 @@ app.post('/validate-rule', (req, res) =>{
                                 }
                               }))
                         }
+                    }else{
+                      console.log('==')
+                      return res.status(400).json(responseMsg(`Invalid condition [${req.body.rule.condition}] payload passed.`,"error", null))
                     }
     
                 }else{
@@ -223,11 +228,12 @@ app.post('/validate-rule', (req, res) =>{
                           }))
             }            
            
+        }else{
+                  return res.status(400).json(responseMsg("Invalid JSON payload passed.","error", null))
+
         }
 
 
-
-        return res.status(400).json(responseMsg("Invalid JSON payload passed.","error", null))
     }else{
 
         return res.status(400).json(responseMsg("field [rule] should be a|an [object].","error", null))
